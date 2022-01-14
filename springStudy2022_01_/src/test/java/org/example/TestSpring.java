@@ -1,10 +1,16 @@
 package org.example;
 
 
+import com.sun.deploy.panel.IProperty;
+import org.example.beanpost.Category;
+import org.example.factorybean.ConnectionFactoryBean;
+import org.example.life.Product;
+import org.example.scope.Account;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.sql.Connection;
 import java.util.Arrays;
 
 public class TestSpring {
@@ -95,6 +101,80 @@ public class TestSpring {
         ApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
         Person person=(Person) context.getBean("person");
         System.out.println(person);
+    }
+    //测试
+    @Test
+    public void test9(){
+        ApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
+        Connection conn=(Connection) context.getBean("conn");
+        Connection coon2=(Connection)context.getBean("conn");
+        System.out.println(conn==coon2);
+    }
+
+    @Test
+    public void test10(){
+        ApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
+        //获取ConnectionFactoryBean的对象
+//        ConnectionFactoryBean conn=(ConnectionFactoryBean) context.getBean("conn");
+//        System.out.println(conn);
+
+        //获取connect 对象
+        Connection connection=(Connection) context.getBean("conn");
+        System.out.println(connection);
+
+    }
+    //测试实例工厂
+    @Test
+    public void test11(){
+        ApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
+        Connection conn=(Connection) context.getBean("conn");
+        System.out.println(conn);
+    }
+    //静态工厂  静态工厂的配置不需要创建对象 只需要指定工厂方法
+    @Test
+    public void test12(){
+        ApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
+        Connection conn=(Connection) context.getBean("conn");
+        System.out.println(conn);
+    }
+    //测试简单对象创建次数
+    @Test
+    public void test13(){
+        ApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
+        Account account=(Account) context.getBean("account");
+        Account account2=(Account) context.getBean("account");
+        System.out.println(account==account2);   //singleton 创建一次 返回true   prototype 多次 false  默认singleton
+    }
+    //演示生命周期
+    @Test
+    public void test14(){
+        ClassPathXmlApplicationContext context=new ClassPathXmlApplicationContext("applicationContext.xml");
+      //执行结果： product 证明无参构造方法被调用 singleton:工厂创建的同时创建对象
+        //scope=property,getBean方法才会调用构造方法。
+        System.out.println(context.getBean("product"));
+        context.close();//销毁
+
+    }
+    //测试配置文件参数化
+    @Test
+    public void test15(){
+        ApplicationContext context=new ClassPathXmlApplicationContext("applicationContext1.xml");
+        System.out.println(context.getBean("conn"));
+    }
+    //测试自定义类型转换器 日期类型
+    @Test
+    public void test16(){
+        ApplicationContext context=new ClassPathXmlApplicationContext("applicationContext2.xml");
+        org.example.converter.Person person=(org.example.converter.Person) context.getBean("person");
+        System.out.println(person);
+    }
+
+    //测试BeanPostProcess
+    @Test
+    public void  test17(){
+        ApplicationContext context=new ClassPathXmlApplicationContext("applicationContext3.xml");
+        Category category=(Category) context.getBean("c");
+        System.out.println(category.getName());
     }
 }
 

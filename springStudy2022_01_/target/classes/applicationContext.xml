@@ -20,4 +20,34 @@
                 </property>
         </bean>
 
+        <!--factoryBean配置-->
+        <!--获得的不是ConnectionFactoryBean类的对象，而是这个类创建的connection这个复杂对象-->
+<!--        <bean id="conn" class="org.example.factorybean.ConnectionFactoryBean">-->
+<!--                <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>-->
+<!--                <property name="url" value="jdbc:mysql://localhost:3306/springdb?useSSL=false"></property>-->
+<!--                <property name="username" value="root"></property>-->
+<!--                <property name="password" value="123456"></property>-->
+<!--        </bean>-->
+
+        <!--配置实例工厂-->
+                <!--创建工厂类对象-->
+<!--        <bean id="connFactory" class="org.example.factorybean.ConnectionFactory">-->
+
+<!--        </bean>-->
+<!--        &lt;!&ndash;factory-bean这个标签是说这个coon对象来自coonFactory标签指定的这个bean对象  来自这个ConnectionFactory这个实例工厂类&ndash;&gt;-->
+<!--            <!-创建connection对象-->
+<!--                <bean id="conn" factory-bean="connFactory" factory-method="getConnection"></bean>&ndash;&gt;-->
+
+        <!--配置静态工厂-->
+        <bean id="conn" class="org.example.factorybean.StaticConnectionFactory" factory-method="getConnection"></bean>
+
+
+        <!--简单对象创建次数-->
+        <bean id="account" class="org.example.scope.Account" scope="singleton" ></bean>
+
+<!--        <bean id="product" class="org.example.life.Product" scope="prototype"></bean>-->
+        <bean id="product" class="org.example.life.Product" init-method="myInit"  >
+                <property name="name" value="zhangsan"></property>
+        </bean>
+
 </beans>

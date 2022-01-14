@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+        <bean id="person" class="org.example.converter.Person">
+                <property name="name" value="zhangsan"></property>
+                <property name="birthday" value="2022-01-14"></property>
+        </bean>
+        <!--配置自定义类型转换器  注册 通过spring自己的类的set方法注入 这个属性的值是set类型-->
+        <bean id="myDateConverter" class="org.example.converter.MyDateConverter">
+                <property name="pattern" value="yyyy-MM-dd"/>
+        </bean>
+
+        <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+                <property name="converters">
+                        <set>
+                                <ref bean="myDateConverter"></ref>
+                        </set>
+                </property>
+        </bean>
+</beans>
