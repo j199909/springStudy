@@ -5,6 +5,19 @@
 
 <!--        id属性:名字-->
 <!--        class属性:配置全限定名-->
-        <bean id="person" class="org.example.Person"></bean>
+<!--        <bean id="person" class="org.example.Person"></bean>-->
+
+<!--        name:别名-->
+<!--        <bean id="person" name="p,p1" class="org.example.Person"></bean>-->
+
+        <!--注入  property 标签-->
+        <bean id="person" class="org.example.Person">
+                <property name="id">
+                        <value>10</value>
+                </property>
+                <property name="name">
+                        <value>李四</value>
+                </property>
+        </bean>
 
 </beans>
