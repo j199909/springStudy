@@ -13,15 +13,8 @@
 
 
 
-
-<bean id="userService" class="org.example.proxy.UserServiceImpl"></bean>
-    <bean id="orderService" class="org.example.proxy.OrderServiceImpl"></bean>
-
-    <!--<bean id="before" class="org.example.dynamic.Before2"></bean>-->
-    <bean id="arround" class="org.example.dynamic.Arround"></bean>
-    <aop:config>
-        <aop:pointcut id="pc" expression="execution(* login(String,String))"/>
-        <aop:advisor advice-ref="arround" pointcut-ref="pc"/>
-    </aop:config>
-
+        <bean id="userService" class="org.example.aspect.UserServiceImpl"></bean>
+        <bean id="arround" class="org.example.aspect.MyAspect"></bean>
+        <!--告知spring基于注解来开发切面-->
+        <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>
